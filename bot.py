@@ -8,8 +8,8 @@ dispatcher = updater.dispatcher
 # обработка событий
 # _
 # для команды /start
-def startCommand(bot, update):
-	bot.send_message(chat_id=update.message.chat_id, text='Привет, братан!')
+# def startCommand(bot, update):
+	# bot.send_message(chat_id=update.message.chat_id, text='Привет, братан!')
 
 # для любого текстового сообщения
 def textMessage(bot, update):
@@ -28,10 +28,10 @@ def textMessage(bot, update):
 
 
 # хендлеры
-start_command_handler = CommandHandler('start', startCommand)
+# start_command_handler = CommandHandler('start', startCommand)
 text_message_handler = MessageHandler(Filters.text, textMessage)
 
-dispatcher.add_handler(start_command_handler)
+# dispatcher.add_handler(start_command_handler)
 dispatcher.add_handler(text_message_handler)
 
 
