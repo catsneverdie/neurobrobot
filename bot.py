@@ -8,30 +8,28 @@ dispatcher = updater.dispatcher
 # обработка событий
 # _
 # для команды /start
-# def startCommand(bot, update):
-	# bot.send_message(chat_id=update.message.chat_id, text='Привет, братан!')
+def startCommand(bot, update):
+	bot.send_message(chat_id=update.message.chat_id, text='Привет, я - твой Нейробратан. Я пока что не очень умный, но ты можешь попробовать пообщаться со мной :)')
 
 # для любого текстового сообщения
 def textMessage(bot, update):
-	request = apiai.ApiAI('c9eb73e915e949edaf20338c01c6c020').text_request()	# здесь нужен токен Dialogflow
+	request = apiai.ApiAI('e4587e9b8d1442f882c7a6d744bf2210').text_request()	# здесь нужен токен Dialogflow
 	request.lang = 'ru'															# язык запроса
 	request.session_id = 'neurobrobot'											# ID сессии для Dialogflow
 	request.query = update.message.text											# посылаем запрос ИИ с сообщением юзера
 	# разбираем JSON
 	responseJson = json.loads(request.getresponse().read().decode('utf-8'))
 	response = responseJson['result']['fulfillment']['speech']
-	# если есть ответ от ИИ - посылаем юзеру, если нет - шаблон "Я не понял"
+	# если есть ответ от ИИ - посылаем юзеру
 	if response:
 		bot.send_message(chat_id=update.message.chat_id, text=response)
-	else:
-		bot.send_message(chat_id=update.message.chat_id, text='Я не совсем врубаюсь, братан!')
 
 
 # хендлеры
-# start_command_handler = CommandHandler('start', startCommand)
+start_command_handler = CommandHandler('start', startCommand)
 text_message_handler = MessageHandler(Filters.text, textMessage)
 
-# dispatcher.add_handler(start_command_handler)
+dispatcher.add_handler(start_command_handler)
 dispatcher.add_handler(text_message_handler)
 
 
