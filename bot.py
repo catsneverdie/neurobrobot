@@ -25,13 +25,17 @@ def textMessage(bot, update):
 		bot.send_message(chat_id=update.message.chat_id, text=response)
 
 
+def sayHello(bot, update):
+	bot.send_message(chat_id=update.message.chat_id, text='Привет! Кликни на это сообщение и нажми "Ответить", чтобы поговорить со мной.')
+
 # хендлеры
 start_command_handler = CommandHandler('start', startCommand)
 text_message_handler = MessageHandler(Filters.text, textMessage)
+sayhello_handler = CommandHandler('sayhello', sayHello)
 
 dispatcher.add_handler(start_command_handler)
 dispatcher.add_handler(text_message_handler)
-
+dispatcher.add_handler(sayhello_handler)
 
 # поиск обновлений
 updater.start_polling(clean='True')
