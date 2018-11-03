@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # настройки
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-import apiai, json, awsmpg
+import apiai, json, awsmpg, awsmsg
 updater = Updater(token='700733396:AAEUM6LbSwG8YFXMKjfvXYK--BZjOFitwR8')
 dispatcher = updater.dispatcher
 
@@ -29,21 +29,29 @@ def sayHello(bot, update):
 
 # /postverse
 # отправляет сообщением случайно сгенерированное четверостишие
-def postPoem(bot, update):
-	poem = awsmpg.makePoem()
-	bot.send_message(chat_id=update.message.chat_id, text=poem)
+def postVerse(bot, update):
+	verse = awsmpg.makeVerse()
+	bot.send_message(chat_id=update.message.chat_id, text=verse)
+
+# /poststory
+# отправляет сообщением случайно сгенерированную историю
+def postStory(bot, update):
+	story = awsmsg.makeStory()
+	bot.send_message(chat_id=update.message.chat_id, text=story)
 
 
 # хендлеры
 start_command_handler = CommandHandler('start', startCommand)
 text_message_handler = MessageHandler(Filters.text, textMessage)
 sayhello_handler = CommandHandler('sayhello', sayHello)
-postverse_handler = CommandHandler('postverse', postPoem)
+postverse_handler = CommandHandler('postverse', postVerse)
+poststory_handler = CommandHandler('poststory', postStory)
 
 dispatcher.add_handler(start_command_handler)
 dispatcher.add_handler(text_message_handler)
 dispatcher.add_handler(sayhello_handler)
 dispatcher.add_handler(postverse_handler)
+dispatcher.add_handler(poststory_handler)
 
 # поиск обновлений
 updater.start_polling(clean='True')
